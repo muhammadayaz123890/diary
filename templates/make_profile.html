@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+
+{% include 'navbar.html' %}
+
+<style>
+    .main-profile-container{
+        min-height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .main-profile-container .profile-form-area{
+        min-height: 45rem;
+        margin-top: 4rem;
+        box-shadow: 0px 10px 20px black;
+        margin-bottom: 3rem;
+        padding: 2rem;
+        width: 30rem;
+        background-color: lightgray;
+    }
+    .main-profile-container .profile-form-area .two-imgs-container{
+        height: 20rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .main-profile-container .profile-form-area .two-imgs-container .first-div{
+        display: flex;
+        flex-direction: column;
+    }
+    .main-profile-container .profile-form-area .two-imgs-container .second-div{
+        display: flex;
+        flex-direction: column;
+    }
+    .two-imgs-container .first-div img,.two-imgs-container .second-div img{
+        height: 6rem;
+        width: 6rem;
+        object-fit: cover;
+    }
+    .text-input-area{
+        display: flex;
+        flex-direction: column;
+    }
+    .text-input-area label{
+        color: gray;
+        font-size: 1.3rem;
+        font-weight: 700;
+        text-shadow: 0px 2px 4px black;
+    }
+    .text-input-area input{
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: gray;
+        padding: .2rem;
+        outline: none;
+        height: 2.3rem;
+        background: none;
+        border-radius: 5px;
+        border: 1.5px solid gray;
+    }
+    .text-input-area input:focus{
+        box-shadow: 0px 0px 3px black;
+    }
+    .text-input-area div{
+        height: 5rem;
+        display: flex;
+        justify-content: space-around;
+        gap: 1rem;
+    }
+    .profile-form-area .btn-area{
+        text-align: center;
+    }
+    .profile-form-area .btn-area input{
+        color: white;
+        background-color: blue;
+        padding: .5rem 1rem;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+        font-size: .9rem;
+        margin-top: 2rem;
+    }
+    .profile-form-area .btn-area input:hover{
+        color: blue;
+        background-color: white;
+        box-shadow: 0px 3px 5px black;
+        cursor: pointer;
+    }
+</style>
+
+
+
+    <div class="main-profile-container" >
+        <form action="" method="post" enctype="multipart/form-data"> 
+            {% csrf_token %}
+            <div class="profile-form-area">
+                <div class="two-imgs-container">
+                    <div class="first-div">
+                        <h3>PROFILE IMAGE</h3>
+                        <img src="..media/example.png" alt="">
+                        <input name="profile_img" type="file">
+                    </div>
+                    <div class="second-div">
+                        <h3>COVER PHOTO</h3>
+                        <img src="{% if profile %} {{profile.cover_img.url}} {% else %} ../media/example.png {% endif %}" alt="">
+                        <input name="cover_img" type="file">
+                    </div>
+                </div>
+                <div class="text-input-area">
+                    <div class="first-name">
+                        <label for="">FIRST NAME</label>
+                        <input value="{{profile.first_name}}" name="first_name" type="text">
+                    </div>
+                    <div class="last-name">
+                        <label for="">LAST NAME</label>
+                        <input value="{{profile.last_name}}" name="last_name" type="text">
+                    </div>
+                    <div class="contact-info">
+                        <label for="">CONTACT NUMBER</label>
+                        <input value="{{profile.contact_info}}" placeholder="(OPTIONAL)" name="contact_number" type="text">
+                    </div>
+                    <div class="profile-bio">
+                        <label for="">PROFILE BIO</label>
+                        <input value="{{profile.bios}}" name="profile_bio" type="text">
+                    </div>
+                </div>
+                <div class="btn-area">
+                    <input type="submit" value="CREATE PROFILE">
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+
+{% endblock %}
+
+
+
+

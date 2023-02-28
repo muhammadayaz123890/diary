@@ -1,0 +1,318 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+{% include 'navbar.html' %}
+{% load custom_tags %}
+<style>
+    .index-container{
+        height: 89vh;
+        display: flex;
+        gap: 3rem;
+        flex-direction: row;
+    }
+    .index-container .left-container{
+        flex: .3;
+        overflow: auto;
+        border: 2px solid blue;
+        margin-top: 3rem;
+    }
+    .index-container .left-container::-webkit-scrollbar{
+        width: 8px;
+    }
+    .index-container .left-container::-webkit-scrollbar-thumb{
+        width: 8px;
+        background-color: gray;
+        border-radius: 8px;
+    }
+    .index-container .right-container::-webkit-scrollbar{
+        width: 8px;
+    }
+    .index-container .right-container::-webkit-scrollbar-thumb{
+        width: 8px;
+        background-color: gray;
+        border-radius: 8px;
+    }
+    .index-container .right-container{
+        flex: 1;
+        overflow: auto;
+        border-right: 2px solid gray;
+        padding-bottom: 3rem;
+        box-shadow: 2px 0px 3px gray;
+        position: relative;
+        border-top: 2px solid gray;
+        margin-top: 3rem;
+    }
+    .right-container .post{
+        box-shadow: 0px 0px 5px black;
+        min-height: 35rem;
+        position: relative;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        overflow: hidden;
+        width: 40rem;
+        min-height: 37rem;
+        margin-top: 5rem;
+        background-color: rgb(212, 217, 219);
+        display: flex;
+        flex-direction: column;
+    }
+    .right-container .post .pro-area{
+        min-height: 4rem;
+        display: flex;
+        align-items: center;
+    }
+    .right-container .post .img-area{
+        text-align: center;
+        min-height: 27rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .post .img-area img{
+        min-width: 25rem;
+        min-height: 20rem;
+        object-fit: cover;
+    }
+    .post .btn-area{
+        min-height: 4rem;
+    }
+    .post .pro-area img{
+        height: 3rem;
+        width: 3rem;
+        margin-left: .3rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .post .pro-area a{
+        color: black;
+        font-size: 1rem;
+        font-family: sans-serif;
+        text-decoration:none;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: .5rem;
+    }
+    .post .btn-area{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    .post .btn-area a{
+        color: black;
+        box-shadow: 0px 3px 5px black;
+        background-color: white;
+        padding: .5rem 1rem;
+        font-size: .9rem;
+        text-decoration: none;
+    }
+    .btn-area form input{
+        color: white;
+        background-color: blue;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        padding: .5rem .5rem;
+        font-size: .9rem;
+        box-shadow: 0px 4px 5px gray;
+    }
+    .btn-area form input:hover{
+        color: blue;
+        background-color: white;
+        box-shadow: 0px 3px 5px black;
+        cursor: pointer;
+        text-shadow: 0px 0px 3px blue;
+    }
+    .post .btn-area a:hover{
+        color: white;
+        box-shadow: 0px 3px 5px gray;
+        background-color: black;
+    }
+    .left-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .left-container .person{
+        border-radius: 10px;
+        width: 80%;
+        padding: 1rem;
+        height: 4rem;
+        margin-top: 2rem;
+        background-color: lightgray;
+        display: flex;
+        gap: .8rem;
+        align-items: center;
+    }
+    .person .img-div{
+        height: 3rem;
+        width: 3rem;
+        border-radius: 50%;
+    }
+    .person .img-div img{
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-left: .9rem;
+    }
+    .person .text-div{
+        width: 70%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+    }
+    .person .text-div .name{
+        color: black;
+        font-size: .9rem;
+    }
+    .person .text-div form input{
+        color: white;
+        background-color: blue;
+        font-size: .9rem;
+        padding: .2rem;
+        border-radius: 2px;
+        border: none;
+        outline: none;
+        padding: .4rem;
+    }
+    .person .text-div form input:hover{
+        color: blue;
+        background-color: white;
+        box-shadow: 0px 3px 5px black;
+        cursor: pointer;
+    }
+    .person .text-div .name a{
+        text-decoration: none;
+        color: black;
+    }
+    .index-container .left-container{
+        border: 2px solid gray;
+        box-shadow: -3px 0px 5px gray;
+    }
+    .person .text-div .name a:hover{
+        color: purple;
+        text-decoration: underline;
+    }
+    .post .comment-area{
+        height: 5rem;
+        display: flex;
+        align-items:center;
+        flex-direction: row;
+        justify-content:space-around;
+    }
+    .post .comment-area{
+        height: 5rem;
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        background: none;
+    }
+    .comment-area form textarea{
+        height: 3rem;
+        width: 20rem;
+        background: none;
+        resize: none;
+        border: 2px solid gray;
+        padding: .5rem;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        outline: none;
+    }
+    .comment-area form input{
+        color: white;
+        background-color: blue;
+        padding: .5rem 1rem;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+        cursor: pointer;
+        box-shadow: 0px 0px 5px black;
+    }
+    .comment-area form input:hover{
+        color: blue;
+        background-color: white;
+    }
+</style>
+
+
+    <div class="index-container">
+        <div class="right-container">
+            <h1>Posts</h1>
+            {% for post in posts %}
+            <div class="post">
+                <div class="pro-area">
+                    <a href="/user_profile/?user_id={{post.user.id}}"><img src="{{post.profile.profile_img.url}}" alt="">{{post.profile.first_name}} {{post.profile.last_name}}</a>
+                </div>
+                <div class="img-area">
+                    <a target="_blank" href="{{post.img.url}}"><img src="{{post.img.url}}" alt="IMAGE NOT FOUND FOR THIS POST"></a>
+                </div>
+                <div class="btn-area">
+                    {% if request.user|is_in_likers:post %}
+                    <form action="/dislike/" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="post_id" value="{{post.id}}" hidden>
+                        <input type="submit" value="DISLIKE   {{post.likes}}" />
+                    </form>
+                    {% else %}
+                    <form action="/like/" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="post_id" value="{{post.id}}" hidden>
+                        <input type="submit" value="LIKE   {{post.likes}}" />
+                    </form>
+                    {% endif %}
+                    
+                    <a href="/comments/?post_id={{post.id}}" class="see-comments">READ COMMENTS</a>
+                </div>
+                <div class="comment-area">
+                    <form action="/post_comment/" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="post_id" value="{{post.id}}" hidden>
+                        <textarea required name="comment_text"  id="" cols="30" rows="10"></textarea>
+                        <input type="submit" value="POST COMMENT">
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="left-container">
+            {% for user in all_users %}
+            <div class="person">
+                <div class="img-div">
+                    <a href=""><img src="{{user.profile_img.url}}" alt=""></a>
+                </div>
+                <div class="text-div">
+                    <span class="name">
+                        <a href="/user_required/?user_id={{user.id}}">{{user.first_name}} {{user.last_name}}</a>
+                    </span>
+                    {% if request.user|is_in_followers:user %}
+                    
+                    <form action="/unfollow/" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="user_id" value="{{user.user.id}}" hidden>
+                        <input type="submit" value="UNFOLLOW">
+                    </form>
+                    {% else %}
+                    <form action="/follow/" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="user_id" value="{{user.user.id}}" hidden>
+                        <input type="submit" value="FOLLOW">
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+{% endblock %}
